@@ -8,10 +8,10 @@ var Thrift = thrift.Thrift;
 var Q = thrift.Q;
 
 
-var ttypes = require('./RemoteRadic_types');
+var ttypes = require('./remote_service_types');
 //HELPER FUNCTIONS AND STRUCTURES
 
-radic.remote.RemoteRadic_runConsoleCommand_args = function(args) {
+remote_service_runConsoleCommand_args = function(args) {
   this.authString = null;
   this.command = null;
   if (args) {
@@ -23,8 +23,8 @@ radic.remote.RemoteRadic_runConsoleCommand_args = function(args) {
     }
   }
 };
-radic.remote.RemoteRadic_runConsoleCommand_args.prototype = {};
-radic.remote.RemoteRadic_runConsoleCommand_args.prototype.read = function(input) {
+remote_service_runConsoleCommand_args.prototype = {};
+remote_service_runConsoleCommand_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -60,8 +60,8 @@ radic.remote.RemoteRadic_runConsoleCommand_args.prototype.read = function(input)
   return;
 };
 
-radic.remote.RemoteRadic_runConsoleCommand_args.prototype.write = function(output) {
-  output.writeStructBegin('RemoteRadic_runConsoleCommand_args');
+remote_service_runConsoleCommand_args.prototype.write = function(output) {
+  output.writeStructBegin('remote_service_runConsoleCommand_args');
   if (this.authString !== null && this.authString !== undefined) {
     output.writeFieldBegin('authString', Thrift.Type.STRING, 1);
     output.writeString(this.authString);
@@ -77,7 +77,7 @@ radic.remote.RemoteRadic_runConsoleCommand_args.prototype.write = function(outpu
   return;
 };
 
-radic.remote.RemoteRadic_runConsoleCommand_result = function(args) {
+remote_service_runConsoleCommand_result = function(args) {
   this.success = null;
   this.aex = null;
   this.dex = null;
@@ -101,8 +101,8 @@ radic.remote.RemoteRadic_runConsoleCommand_result = function(args) {
     }
   }
 };
-radic.remote.RemoteRadic_runConsoleCommand_result.prototype = {};
-radic.remote.RemoteRadic_runConsoleCommand_result.prototype.read = function(input) {
+remote_service_runConsoleCommand_result.prototype = {};
+remote_service_runConsoleCommand_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -148,8 +148,8 @@ radic.remote.RemoteRadic_runConsoleCommand_result.prototype.read = function(inpu
   return;
 };
 
-radic.remote.RemoteRadic_runConsoleCommand_result.prototype.write = function(output) {
-  output.writeStructBegin('RemoteRadic_runConsoleCommand_result');
+remote_service_runConsoleCommand_result.prototype.write = function(output) {
+  output.writeStructBegin('remote_service_runConsoleCommand_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -170,16 +170,16 @@ radic.remote.RemoteRadic_runConsoleCommand_result.prototype.write = function(out
   return;
 };
 
-radic.remote.RemoteRadicClient = exports.Client = function(output, pClass) {
+remote_serviceClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
     this._seqid = 0;
     this._reqs = {};
 };
-radic.remote.RemoteRadicClient.prototype = {};
-radic.remote.RemoteRadicClient.prototype.seqid = function() { return this._seqid; }
-radic.remote.RemoteRadicClient.prototype.new_seqid = function() { return this._seqid += 1; }
-radic.remote.RemoteRadicClient.prototype.runConsoleCommand = function(authString, command, callback) {
+remote_serviceClient.prototype = {};
+remote_serviceClient.prototype.seqid = function() { return this._seqid; }
+remote_serviceClient.prototype.new_seqid = function() { return this._seqid += 1; }
+remote_serviceClient.prototype.runConsoleCommand = function(authString, command, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -198,10 +198,10 @@ radic.remote.RemoteRadicClient.prototype.runConsoleCommand = function(authString
   }
 };
 
-radic.remote.RemoteRadicClient.prototype.send_runConsoleCommand = function(authString, command) {
+remote_serviceClient.prototype.send_runConsoleCommand = function(authString, command) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('runConsoleCommand', Thrift.MessageType.CALL, this.seqid());
-  var args = new radic.remote.RemoteRadic_runConsoleCommand_args();
+  var args = new remote_service_runConsoleCommand_args();
   args.authString = authString;
   args.command = command;
   args.write(output);
@@ -209,7 +209,7 @@ radic.remote.RemoteRadicClient.prototype.send_runConsoleCommand = function(authS
   return this.output.flush();
 };
 
-radic.remote.RemoteRadicClient.prototype.recv_runConsoleCommand = function(input,mtype,rseqid) {
+remote_serviceClient.prototype.recv_runConsoleCommand = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -218,7 +218,7 @@ radic.remote.RemoteRadicClient.prototype.recv_runConsoleCommand = function(input
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new radic.remote.RemoteRadic_runConsoleCommand_result();
+  var result = new remote_service_runConsoleCommand_result();
   result.read(input);
   input.readMessageEnd();
 
@@ -233,10 +233,10 @@ radic.remote.RemoteRadicClient.prototype.recv_runConsoleCommand = function(input
   }
   return callback('runConsoleCommand failed: unknown result');
 };
-radic.remote.RemoteRadicProcessor = exports.Processor = function(handler) {
+remote_serviceProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
-radic.remote.RemoteRadicProcessor.prototype.process = function(input, output) {
+remote_serviceProcessor.prototype.process = function(input, output) {
   var r = input.readMessageBegin();
   if (this['process_' + r.fname]) {
     return this['process_' + r.fname].call(this, r.rseqid, input, output);
@@ -251,20 +251,20 @@ radic.remote.RemoteRadicProcessor.prototype.process = function(input, output) {
   }
 }
 
-radic.remote.RemoteRadicProcessor.prototype.process_runConsoleCommand = function(seqid, input, output) {
-  var args = new radic.remote.RemoteRadic_runConsoleCommand_args();
+remote_serviceProcessor.prototype.process_runConsoleCommand = function(seqid, input, output) {
+  var args = new remote_service_runConsoleCommand_args();
   args.read(input);
   input.readMessageEnd();
   if (this._handler.runConsoleCommand.length === 2) {
     Q.fcall(this._handler.runConsoleCommand, args.authString, args.command)
       .then(function(result) {
-        var result = new radic.remote.RemoteRadic_runConsoleCommand_result({success: result});
+        var result = new remote_service_runConsoleCommand_result({success: result});
         output.writeMessageBegin("runConsoleCommand", Thrift.MessageType.REPLY, seqid);
         result.write(output);
         output.writeMessageEnd();
         output.flush();
       }, function (err) {
-        var result = new radic.remote.RemoteRadic_runConsoleCommand_result(err);
+        var result = new remote_service_runConsoleCommand_result(err);
         output.writeMessageBegin("runConsoleCommand", Thrift.MessageType.REPLY, seqid);
         result.write(output);
         output.writeMessageEnd();
@@ -272,7 +272,7 @@ radic.remote.RemoteRadicProcessor.prototype.process_runConsoleCommand = function
       });
   } else {
     this._handler.runConsoleCommand(args.authString, args.command,  function (err, result) {
-      var result = new radic.remote.RemoteRadic_runConsoleCommand_result((err != null ? err : {success: result}));
+      var result = new remote_service_runConsoleCommand_result((err != null ? err : {success: result}));
       output.writeMessageBegin("runConsoleCommand", Thrift.MessageType.REPLY, seqid);
       result.write(output);
       output.writeMessageEnd();

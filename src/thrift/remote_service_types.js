@@ -9,12 +9,6 @@ var Q = thrift.Q;
 
 
 var ttypes = module.exports = {};
-if (typeof radic === 'undefined') {
-  radic = {};
-}
-if (typeof radic.remote === 'undefined') {
-  radic.remote = {};
-}
 ttypes.ErrorCode = {
   'INVALID_REQUEST' : 0,
   'INVALID_AUTHSTRING' : 1,
@@ -23,9 +17,9 @@ ttypes.ErrorCode = {
   'FILE_ERROR' : 4,
   'NO_READ' : 5
 };
-radic.remote.EDataException = module.exports.EDataException = function(args) {
-  Thrift.TException.call(this, "radic.remote.EDataException")
-  this.name = "radic.remote.EDataException"
+EDataException = module.exports.EDataException = function(args) {
+  Thrift.TException.call(this, "EDataException")
+  this.name = "EDataException"
   this.code = null;
   this.errorMessage = null;
   if (args) {
@@ -37,9 +31,9 @@ radic.remote.EDataException = module.exports.EDataException = function(args) {
     }
   }
 };
-Thrift.inherits(radic.remote.EDataException, Thrift.TException);
-radic.remote.EDataException.prototype.name = 'EDataException';
-radic.remote.EDataException.prototype.read = function(input) {
+Thrift.inherits(EDataException, Thrift.TException);
+EDataException.prototype.name = 'EDataException';
+EDataException.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -75,7 +69,7 @@ radic.remote.EDataException.prototype.read = function(input) {
   return;
 };
 
-radic.remote.EDataException.prototype.write = function(output) {
+EDataException.prototype.write = function(output) {
   output.writeStructBegin('EDataException');
   if (this.code !== null && this.code !== undefined) {
     output.writeFieldBegin('code', Thrift.Type.I32, 1);
@@ -92,9 +86,9 @@ radic.remote.EDataException.prototype.write = function(output) {
   return;
 };
 
-radic.remote.EAuthException = module.exports.EAuthException = function(args) {
-  Thrift.TException.call(this, "radic.remote.EAuthException")
-  this.name = "radic.remote.EAuthException"
+EAuthException = module.exports.EAuthException = function(args) {
+  Thrift.TException.call(this, "EAuthException")
+  this.name = "EAuthException"
   this.code = null;
   this.errorMessage = null;
   if (args) {
@@ -106,9 +100,9 @@ radic.remote.EAuthException = module.exports.EAuthException = function(args) {
     }
   }
 };
-Thrift.inherits(radic.remote.EAuthException, Thrift.TException);
-radic.remote.EAuthException.prototype.name = 'EAuthException';
-radic.remote.EAuthException.prototype.read = function(input) {
+Thrift.inherits(EAuthException, Thrift.TException);
+EAuthException.prototype.name = 'EAuthException';
+EAuthException.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -144,7 +138,7 @@ radic.remote.EAuthException.prototype.read = function(input) {
   return;
 };
 
-radic.remote.EAuthException.prototype.write = function(output) {
+EAuthException.prototype.write = function(output) {
   output.writeStructBegin('EAuthException');
   if (this.code !== null && this.code !== undefined) {
     output.writeFieldBegin('code', Thrift.Type.I32, 1);
@@ -161,7 +155,7 @@ radic.remote.EAuthException.prototype.write = function(output) {
   return;
 };
 
-radic.remote.ConsoleLine = module.exports.ConsoleLine = function(args) {
+ConsoleLine = module.exports.ConsoleLine = function(args) {
   this.timestamp = null;
   this.message = null;
   this.level = null;
@@ -177,8 +171,8 @@ radic.remote.ConsoleLine = module.exports.ConsoleLine = function(args) {
     }
   }
 };
-radic.remote.ConsoleLine.prototype = {};
-radic.remote.ConsoleLine.prototype.read = function(input) {
+ConsoleLine.prototype = {};
+ConsoleLine.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -221,7 +215,7 @@ radic.remote.ConsoleLine.prototype.read = function(input) {
   return;
 };
 
-radic.remote.ConsoleLine.prototype.write = function(output) {
+ConsoleLine.prototype.write = function(output) {
   output.writeStructBegin('ConsoleLine');
   if (this.timestamp !== null && this.timestamp !== undefined) {
     output.writeFieldBegin('timestamp', Thrift.Type.I64, 1);
@@ -243,7 +237,7 @@ radic.remote.ConsoleLine.prototype.write = function(output) {
   return;
 };
 
-radic.remote.ConsoleCommand = module.exports.ConsoleCommand = function(args) {
+ConsoleCommand = module.exports.ConsoleCommand = function(args) {
   this.command = null;
   this.stdout = null;
   this.exitCode = null;
@@ -263,8 +257,8 @@ radic.remote.ConsoleCommand = module.exports.ConsoleCommand = function(args) {
     }
   }
 };
-radic.remote.ConsoleCommand.prototype = {};
-radic.remote.ConsoleCommand.prototype.read = function(input) {
+ConsoleCommand.prototype = {};
+ConsoleCommand.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -328,7 +322,7 @@ radic.remote.ConsoleCommand.prototype.read = function(input) {
   return;
 };
 
-radic.remote.ConsoleCommand.prototype.write = function(output) {
+ConsoleCommand.prototype.write = function(output) {
   output.writeStructBegin('ConsoleCommand');
   if (this.command !== null && this.command !== undefined) {
     output.writeFieldBegin('command', Thrift.Type.STRING, 1);
