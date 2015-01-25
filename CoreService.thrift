@@ -80,7 +80,7 @@ struct ConsoleCommand {
 	3: i32 exitCode
 	4: list<ConsoleLine> outputLines;
 }
-service remote_service {
+service CoreService {
 ConsoleCommand
 	 runConsoleCommand(1:string authString, 2:string command)
 	throws(1:EAuthException aex, 2:EDataException dex)
